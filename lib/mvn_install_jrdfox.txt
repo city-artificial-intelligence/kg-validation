@@ -1,0 +1,36 @@
+Update Semptember 2018: Note that RDFox is a commercial product. For users in academia, RDFox can be used under a noncommercial academic license.
+
+Install JRDFox in the local maven repository
+
+mvn install:install-file -Dfile=<path-to-file> -DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> -Dpackaging=<packaging>
+
+
+Select group id, artifact id and version as it appears in the pom (using RDFox SVN version: 2776 (available in 2017)):
+  <dependency>
+    <groupId>uk.ox.jrdfox</groupId>
+    <artifactId>jrdfox</artifactId>
+    <version>1.2776.2017</version>
+  </dependency>
+
+e.g.:
+mvn install:install-file -Dfile=/home/ernesto/git/ontology-services-toolkit-ost/lib/JRDFox.jar -DgroupId=uk.ox.ost.jrdfox -DartifactId=jrdfox -Dversion=1.4.0.2019 -Dpackaging=jar
+
+
+Select the JRDFox according to your platform (JRDFox-mac, JRDFox-windows and JRDFox-linux). 
+
+
+To compile RDFox it is recommended to have the latest (or one of the latest) g++ compiler installed.
+
+1. Go to CppRDFox folder and execute:
+make apilogging=yes dll=yes
+make apilogging=yes
+make dll=yes
+This combination of parameters will create libCppRDFox-logAPI.so and libCppRDFox.so in the buld folders, which will be then required by the java compilation with ant
+
+2. Go to folder JRDFox and run 
+'ant' without any arguments
+
+The folder JRDFox/build/jar should contain the jar distribution of (J)RDFox.
+
+3. Install the generated jar file in the local maven repository as described above.
+ 

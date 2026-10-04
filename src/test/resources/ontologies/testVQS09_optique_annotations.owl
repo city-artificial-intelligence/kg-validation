@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://no.uio.sirius.ontology/testVQS09_optique_annotations#"
+     xml:base="http://no.uio.sirius.ontology/testVQS09_optique_annotations"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:annotations="http://eu.optique.ontology/annotations#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:annotations1="http://no.sirius.ontology/annotations#">
+    <owl:Ontology rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://eu.optique.ontology/annotations#data_values -->
+
+    <owl:AnnotationProperty rdf:about="http://eu.optique.ontology/annotations#data_values"/>
+    
+
+
+    <!-- http://eu.optique.ontology/annotations#domain_class -->
+
+    <owl:AnnotationProperty rdf:about="http://eu.optique.ontology/annotations#domain_class"/>
+    
+
+
+    <!-- http://eu.optique.ontology/annotations#max_value -->
+
+    <owl:AnnotationProperty rdf:about="http://eu.optique.ontology/annotations#max_value"/>
+    
+
+
+    <!-- http://eu.optique.ontology/annotations#min_value -->
+
+    <owl:AnnotationProperty rdf:about="http://eu.optique.ontology/annotations#min_value"/>
+    
+
+
+    <!-- http://eu.optique.ontology/annotations#range_class -->
+
+    <owl:AnnotationProperty rdf:about="http://eu.optique.ontology/annotations#range_class"/>
+    
+
+
+    <!-- http://no.sirius.ontology/annotations#hidden -->
+
+    <owl:AnnotationProperty rdf:about="http://no.sirius.ontology/annotations#hidden"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#hasUnit -->
+
+    <owl:ObjectProperty rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#hasUnit">
+        <annotations:domain_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#StratigraphicZone"/>
+        <annotations:range_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#StratigraphicUnit"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#hiddenProperty -->
+
+    <owl:ObjectProperty rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#hiddenProperty">
+        <annotations:domain_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#UsesHiddenClassAndProperty"/>
+        <annotations:range_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#WellBoreInterval"/>
+        <annotations1:hidden rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</annotations1:hidden>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#multipleRangesDomains -->
+
+    <owl:ObjectProperty rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#multipleRangesDomains">
+        <annotations:domain_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Domain1"/>
+        <annotations:domain_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Domain2"/>
+        <annotations:range_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Range1"/>
+        <annotations:range_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Range2"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#pointsToHiddenClass -->
+
+    <owl:ObjectProperty rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#pointsToHiddenClass">
+        <annotations:domain_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#UsesHiddenClassAndProperty"/>
+        <annotations:range_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#HiddenClass"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#name -->
+
+    <owl:DatatypeProperty rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#name">
+        <annotations:data_values>SNORRE,MORVIN,BRYNHILD,BARENTSHAVET,SIRI,HEIMDAL,GULLFAKS S&amp;Oslash;R,VARG,HYME,VALEMON,VALE,VEST EKOFISK,SN&amp;Oslash;HVIT,SLEIPNER &amp;Oslash;ST,EDVARD GRIEG,AASTA HANSTEEN,KRAKA,TAMBAR &amp;Oslash;ST,EMBLA,NORNE,HEIDRUN,MIKKEL,ULA,TORDIS,EDDA,SIGYN,MARULK,ENOCH,VIGDIS,VEGA S&amp;Oslash;R,KNARR,LILLE-FRIGG,TYRIHANS,VILJE,FRIGG,ODIN,MIME,SKULD,DK WEST CM3,HILD,REV,GIMLE,HALTENBANKEN,KVITEBJ&amp;Oslash;RN,GOLIAT,&amp;Oslash;ST FRIGG,BALDER,IVAR AASEN,DRAUGEN,GORM,STATFJORD,STATFJORD NORD,BRAGE,TOR,SKARV,HOD,STATFJORD &amp;Oslash;ST,OSEBERG S&amp;Oslash;R,YTTERGRYTA,NORD&amp;Oslash;ST FRIGG,KRISTIN,COD,DANMARK,VOLUND,TROLL,STINE,ALVHEIM,ORMEN LANGE,SANDBOX,TRYM,URD,SLEIPNER VEST,HULDRA,SVALIN,TROMSOFLAKET,TAMBAR,GUNGNE,JOTUN,ALBUSKJELL,&amp;Aring;SGARD,TUNE,SYGNA,OSEBERG &amp;Oslash;ST,GLITNE,FR&amp;Oslash;Y,VISUND,BLANE,MARTIN LINGE,NJORD,EKOFISK,ATLA,OSEBERG,GULLFAKS,GINA KROG,VALHALL,GUDRUN,RINGHORNE &amp;Oslash;ST,FRAM,GJ&amp;Oslash;A,GRANE,VISUND S&amp;Oslash;R,ALVE,VEGA,TOMMELITEN GAMMA,MURCHISON,VOLVE,OSELVAR,JETTE,GAUPE,SKIRNE,YME,BRITAIN,ELDFISK,VESLEFRIKK,GYDA</annotations:data_values>
+        <annotations:domain_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#StratigraphicUnit"/>
+        <annotations:range_class rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#netToGrossRatio -->
+
+    <owl:DatatypeProperty rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#netToGrossRatio">
+        <annotations:domain_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#WellBoreInterval"/>
+        <annotations:range_class rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#valuesStandardUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#valuesStandardUnit">
+        <annotations:domain_class rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Dimension"/>
+        <annotations:max_value rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">90.3</annotations:max_value>
+        <annotations:min_value rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0004</annotations:min_value>
+        <annotations:range_class rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#Dimension -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Dimension"/>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#Domain1 -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Domain1"/>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#Domain2 -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Domain2"/>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#HiddenClass -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#HiddenClass">
+        <annotations1:hidden rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</annotations1:hidden>
+    </owl:Class>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#Range1 -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Range1"/>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#Range2 -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#Range2"/>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#StratigraphicUnit -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#StratigraphicUnit"/>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#StratigraphicZone -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#StratigraphicZone">
+        <rdfs:subClassOf rdf:resource="http://no.uio.sirius.ontology/testVQS09_optique_annotations#WellBoreInterval"/>
+    </owl:Class>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#UsesHiddenClassAndProperty -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#UsesHiddenClassAndProperty"/>
+    
+
+
+    <!-- http://no.uio.sirius.ontology/testVQS09_optique_annotations#WellBoreInterval -->
+
+    <owl:Class rdf:about="http://no.uio.sirius.ontology/testVQS09_optique_annotations#WellBoreInterval"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.5.20160517-0735) https://github.com/owlcs/owlapi -->
+
