@@ -58,7 +58,7 @@ public class RDFoxProjectionManagerForEmbeddings extends RDFoxProjectionManager{
 			Utility.println("Importing RDF data (projection)...");
 			//store.importFiles(new File[] {new File(tmp_file_projection)});//, new File(tmp_file)});
 			try (InputStream inputStream = new BufferedInputStream(RDFoxProjectionManager.class.getResourceAsStream(tmp_file_projection))) {
-                dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+                dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
             }
 			
 			//EDB are the explicitly stated facts.
@@ -90,7 +90,7 @@ public class RDFoxProjectionManagerForEmbeddings extends RDFoxProjectionManager{
 				getTextForTopBottomPropagationRules(rule_builder);
 			
 			//store.importText(rule_builder.toString());
-			dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, rule_builder.toString());
+			dataStoreConnection.importData(UpdateType.ADDITION, rule_builder.toString());
 			Utility.println("Importing time RDFox: " + t.durationMilisecons()  + " (ms)");
 			
 			

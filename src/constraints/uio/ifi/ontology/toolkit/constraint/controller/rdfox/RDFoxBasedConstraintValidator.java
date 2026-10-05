@@ -25,9 +25,11 @@ import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.model.parameters.Imports;
 
 import tech.oxfordsemantic.jrdfox.Prefixes;
-import tech.oxfordsemantic.jrdfox.client.ConnectionFactory;
+//import tech.oxfordsemantic.jrdfox.client.ConnectionFactory;
 import tech.oxfordsemantic.jrdfox.client.Cursor;
 import tech.oxfordsemantic.jrdfox.client.DataStoreConnection;
+import tech.oxfordsemantic.jrdfox.client.DataStorePart;
+import tech.oxfordsemantic.jrdfox.client.RDFoxServer;
 //import tech.oxfordsemantic.jrdfox.client.QueryDomain;
 import tech.oxfordsemantic.jrdfox.client.ResourceValue;
 import tech.oxfordsemantic.jrdfox.client.ServerConnection;
@@ -165,7 +167,8 @@ public class RDFoxBasedConstraintValidator extends ConstraintValidator{
 		
 		
 				
-		dataStoreConnection.clear();
+		//dataStoreConnection.clear();
+		dataStoreConnection.clear(DataStorePart.AXIOMS | DataStorePart.FACTS | DataStorePart.RULES);
 		dataStoreConnection.close();
 		
 	}
@@ -215,12 +218,25 @@ public class RDFoxBasedConstraintValidator extends ConstraintValidator{
 	protected void initializeRDFox() throws JRDFoxException {
 		
 		//Local server
-		ServerConnection serverConnection = ConnectionFactory.newServerConnection("rdfox:local", "", "");
+		//ServerConnection serverConnection = ConnectionFactory.newServerConnection("rdfox:local", "", "");
+		ServerConnection serverConnection = RDFoxServer.newServerConnection("guest", "guest");
 		
 		// We create a data store of type "par-complex-nn".
 		//Used ParallelSimpleNN before
 		//https://oxfordsemtech.github.io/RDFox/#/04-using?id=data-store-type
-        serverConnection.createDataStore("ontology-projection", "par-complex-nn", Collections.emptyMap());
+		
+		
+		//OLD
+		//serverConnection.createDataStore("ontology-projection", "par-complex-nn", Collections.emptyMap());
+		
+		//New version 7
+		//About parameters: https://docs.oxfordsemantic.tech/data-stores.html#data-store-parameters
+		//default value for the "type" parameter, which is "parallel-nn".
+		//Other options: parallel-nw and parallel-ww
+        serverConnection.createDataStore("kg-validation", Collections.emptyMap());
+
+		
+		
 		
         // We connect to the data store.
 		dataStoreConnection = serverConnection.newDataStoreConnection("ontology-projection");
@@ -238,7 +254,8 @@ public class RDFoxBasedConstraintValidator extends ConstraintValidator{
 	protected static long getTriplesCount(DataStoreConnection dataStoreConnection) throws JRDFoxException {
         HashMap<String, String> parameters = new HashMap<String, String>();
         //parameters.put("domain", queryDomain.toString()); //TODO: Change to string "IDB"??
-        try (Cursor cursor = dataStoreConnection.createCursor(Prefixes.s_emptyPrefixes, "SELECT ?X ?Y ?Z WHERE{ ?X ?Y ?Z }", parameters)) {
+        //try (Cursor cursor = dataStoreConnection.createCursor(Prefixes.s_emptyPrefixes, "SELECT ?X ?Y ?Z WHERE{ ?X ?Y ?Z }", parameters)) {
+        try (Cursor cursor = dataStoreConnection.createCursor("SELECT ?X ?Y ?Z WHERE{ ?X ?Y ?Z }", parameters)) {
             long result = 0;
             for (long multiplicity = cursor.open(); multiplicity != 0; multiplicity = cursor.advance())
                 result += multiplicity;
@@ -268,14 +285,16 @@ public class RDFoxBasedConstraintValidator extends ConstraintValidator{
 			//store.importOntology(o);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			o.saveOntology(new TurtleDocumentFormat(), out);
-			dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, out.toString()); //TODO: Old parameters?? true, true, false, false);
+			//dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, out.toString()); //TODO: Old parameters?? true, true, false, false);
+			dataStoreConnection.importData(UpdateType.ADDITION, out.toString());
 			
 						
 			Utility.println("Importing RDF data...");
 			//store.importFiles(new File[] {tuples_file});
 			InputStream fis = new  FileInputStream(tuples_file);
 			InputStream inputStream = new BufferedInputStream(fis);
-            dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+            //dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+            dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
             
 			number_initial_triples = getTriplesCount(dataStoreConnection);
 			Utility.println("Number of tuples after import: " + number_initial_triples);
@@ -285,7 +304,8 @@ public class RDFoxBasedConstraintValidator extends ConstraintValidator{
 			//File equality_file = new File(Constants.working_directory + "equality.dlog");
 			//store.importFiles(new File[] {equality_file});
 			//store.importText(getTextForEqualityRules());
-			dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, getTextForEqualityRules());
+			//dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, getTextForEqualityRules());
+			dataStoreConnection.importData(UpdateType.ADDITION, getTextForEqualityRules());
 			Utility.println("Importing time RDFox: " + t.durationMilisecons()  + " (ms)");
 			
 			
@@ -333,7 +353,8 @@ public class RDFoxBasedConstraintValidator extends ConstraintValidator{
 		
 		Utility.println("Adding rules from code...");
 		//store.importText(text_rules);
-		dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, text_rules);
+		//dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, text_rules);
+		dataStoreConnection.importData(UpdateType.ADDITION, text_rules);
 		
 		
 		
@@ -425,7 +446,8 @@ public class RDFoxBasedConstraintValidator extends ConstraintValidator{
 		
 		//We use default IDB
 		//tupleIterator = store.compileQuery(query, prefixes);
-	   return dataStoreConnection.createCursor(Prefixes.s_defaultPrefixes, query, parameters);
+	   //return dataStoreConnection.createCursor(Prefixes.s_defaultPrefixes, query, parameters);
+	   return dataStoreConnection.createCursor(query, parameters);
 	}
 	
 	

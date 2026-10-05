@@ -16,14 +16,18 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
-import tech.oxfordsemantic.jrdfox.client.ConnectionFactory;
 import tech.oxfordsemantic.jrdfox.client.Cursor;
 import tech.oxfordsemantic.jrdfox.client.DataStoreConnection;
+import tech.oxfordsemantic.jrdfox.client.RDFoxServer;
 import tech.oxfordsemantic.jrdfox.client.ResourceValue;
 import tech.oxfordsemantic.jrdfox.client.ServerConnection;
 import tech.oxfordsemantic.jrdfox.client.UpdateType;
 import tech.oxfordsemantic.jrdfox.exceptions.JRDFoxException;
 
+
+/*
+ * OLD DEMO
+ */
 public class JRDFoxDemo {
 
     public static void main(String[] args) throws Exception {
@@ -69,10 +73,12 @@ public class JRDFoxDemo {
         // store connections implement the AutoCloseable interface so they can be used in
         // try-with-resources statements. By using "rdfox:local" as the server name, we indicate that
         // we wish to access the local server. At present, the user name and password are ignored.
-        try (ServerConnection serverConnection = ConnectionFactory.newServerConnection("rdfox:local", "", "")) {
+        //try (ServerConnection serverConnection = ConnectionFactory.newServerConnection("rdfox:local", "", "")) {
+        try (ServerConnection serverConnection = RDFoxServer.newServerConnection("guest", "guest")) {
 
             // We create a data store of type "par-complex-nn".
-            serverConnection.createDataStore("example", "par-complex-nn", Collections.emptyMap());
+            //serverConnection.createDataStore("example", "par-complex-nn", Collections.emptyMap());
+            serverConnection.createDataStore("example", Collections.emptyMap());
 
             // We connect to the data store.
             try (DataStoreConnection dataStoreConnection = serverConnection.newDataStoreConnection("example")) {
@@ -85,7 +91,8 @@ public class JRDFoxDemo {
                 // At the moment, please convert RDF/XML files into Turtle format to load into JRDFox.
                 System.out.println("Importing RDF data...");
                 try (InputStream inputStream = new BufferedInputStream(JRDFoxDemo.class.getResourceAsStream("data/lubm1.ttl"))) {
-                    dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+                    //dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+                    dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
                 }
 
                 // RDFox manages data in several domains.
@@ -107,15 +114,19 @@ public class JRDFoxDemo {
 
                 // SPARQL queries can be evaluated in several ways. One option is to have the query result be written to
                 // an output stream in one of the supported formats.
-                dataStoreConnection.evaluateStatement(Prefixes.s_emptyPrefixes, "SELECT DISTINCT ?Y WHERE { ?X ?Y ?Z }", Collections.emptyMap(), System.out, "application/sparql-results+json");
-
+                //dataStoreConnection.evaluateStatement(Prefixes.s_emptyPrefixes, "SELECT DISTINCT ?Y WHERE { ?X ?Y ?Z }", Collections.emptyMap(), System.out, "application/sparql-results+json");
+                dataStoreConnection.evaluateStatement("SELECT DISTINCT ?Y WHERE { ?X ?Y ?Z }", Collections.emptyMap(), System.out, "application/sparql-results+json");
+                
                 // We now add the ontology and the custom rules to the data.
                 System.out.println("Adding the ontology to the store...");
                 //dataStoreConnection.importData(UpdateType.ADDITION, ontology, true, true, false, false);
-                dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, ontology.toString());
+                //dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, ontology.toString());
+                dataStoreConnection.importData(UpdateType.ADDITION, ontology.toString());
+                
                 System.out.println("Importing rules from a file...");
                 try (InputStream inputStream = new BufferedInputStream(JRDFoxDemo.class.getResourceAsStream("data/additional-rules.txt"))) {
-                    dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+                    //dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+                	dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
                 }
                 System.out.println("Number of tuples after materialization: " + getTriplesCount(dataStoreConnection));
 
@@ -129,7 +140,8 @@ public class JRDFoxDemo {
                 // are stored in a temporary buffer before they can be accessed. If a frozen cursor is reopened, it will
                 // still provide the same answer as at the time it was created. Since in our example no transaction is active
                 // on a connection, the following statement creates a frozen cursor.
-                try (Cursor cursor = dataStoreConnection.createCursor(Prefixes.s_emptyPrefixes, "SELECT DISTINCT ?Y WHERE { ?X ?Y ?Z }", Collections.emptyMap())) {
+                //try (Cursor cursor = dataStoreConnection.createCursor(Prefixes.s_emptyPrefixes, "SELECT DISTINCT ?Y WHERE { ?X ?Y ?Z }", Collections.emptyMap())) {
+                try (Cursor cursor = dataStoreConnection.createCursor("SELECT DISTINCT ?Y WHERE { ?X ?Y ?Z }", Collections.emptyMap())) {
                     int numberOfRows = 0;
                     System.out.println();
                     System.out.println("=======================================================================================");
@@ -146,7 +158,7 @@ public class JRDFoxDemo {
                             // package has the benefit of ensuring that at any point each term is represented by at most one Java
                             // object. This benefit, however, comes at a price, since, unlike in the case of Resource objects, the
                             // creation of GroundTerm objects involves a hash table lookup, which in some cases can lead to a significant
-                            // overhead.
+                            // overhead. 
                             ResourceValue resource = cursor.getResourceValue(termIndex);
                             System.out.print(resource.toString(Prefixes.s_defaultPrefixes));
                         }
@@ -166,7 +178,8 @@ public class JRDFoxDemo {
                 // calling DataStoreConnection.importDataFiles() with additional argument UpdateType.ADDITION.
                 System.out.println("Import triples for incremental reasoning");
                 try (InputStream inputStream = new BufferedInputStream(JRDFoxDemo.class.getResourceAsStream("data/lubm1-new.ttl"))) {
-                    dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+                    //dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+                	dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
                 }
                 // Adding the rules/facts changes the number of triples. Note that the store is updated incrementally.
                 System.out.println("Number of tuples after addition: " + getTriplesCount(dataStoreConnection));
@@ -175,7 +188,8 @@ public class JRDFoxDemo {
                 System.out.print("Exporting facts to file '" + finalFactsFile + "' ... ");
                 try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(finalFactsFile))) {
                 	Map<String, String> parameters = new HashMap<String, String>();
-                    dataStoreConnection.exportData(Prefixes.s_defaultPrefixes, outputStream , "application/n-triples", parameters);
+                    //dataStoreConnection.exportData(Prefixes.s_defaultPrefixes, outputStream , "application/n-triples", parameters);
+                	dataStoreConnection.exportData(outputStream , "application/n-triples", parameters);
                 }
                 System.out.println("done.");
             }
@@ -193,7 +207,8 @@ public class JRDFoxDemo {
     protected static long getTriplesCount(DataStoreConnection dataStoreConnection) throws JRDFoxException {
         HashMap<String, String> parameters = new HashMap<String, String>();
 //        parameters.put("domain", queryDomain.toString());
-        try (Cursor cursor = dataStoreConnection.createCursor(Prefixes.s_emptyPrefixes, "SELECT ?X ?Y ?Z WHERE{ ?X ?Y ?Z }", parameters)) {
+        //try (Cursor cursor = dataStoreConnection.createCursor(Prefixes.s_emptyPrefixes, "SELECT ?X ?Y ?Z WHERE{ ?X ?Y ?Z }", parameters)) {
+        try (Cursor cursor = dataStoreConnection.createCursor("SELECT ?X ?Y ?Z WHERE{ ?X ?Y ?Z }", parameters)) {
             long result = 0;
             for (long multiplicity = cursor.open(); multiplicity != 0; multiplicity = cursor.advance())
                 result += multiplicity;

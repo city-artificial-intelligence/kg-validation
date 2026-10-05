@@ -62,9 +62,9 @@ import uio.ifi.ontology.toolkit.projection.model.triples.ObjectPropertyTriple;
 import uio.ifi.ontology.toolkit.projection.utils.URIUtils;
 
 import tech.oxfordsemantic.jrdfox.Prefixes;
-import tech.oxfordsemantic.jrdfox.client.ConnectionFactory;
 import tech.oxfordsemantic.jrdfox.client.Cursor;
 import tech.oxfordsemantic.jrdfox.client.DataStoreConnection;
+import tech.oxfordsemantic.jrdfox.client.RDFoxServer;
 //import tech.oxfordsemantic.jrdfox.client.QueryDomain;
 import tech.oxfordsemantic.jrdfox.client.ResourceValue;
 import tech.oxfordsemantic.jrdfox.client.ServerConnection;
@@ -196,20 +196,20 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 	protected void initializeRDFox() throws JRDFoxException {
 		
 		//Local server
-		serverConnection = ConnectionFactory.newServerConnection("rdfox:local", "", "");
+		serverConnection = RDFoxServer.newServerConnection("guest", "guest");
 		
 		// We create a data store of type "par-complex-nn".
 		//Used ParallelSimpleNN before
 		//https://oxfordsemtech.github.io/RDFox/#/04-using?id=data-store-type
 		HashMap<String, String> options = new HashMap<String, String>(); //Collections.emptyMap()
 		
-		//TODO Check UNA and equaliaty rules.... 
-		options.put("equality", "off"); //off, UNA, noUNA, etc.
+		//TODO Check UNA and equality rules.... 
+		options.put("equality", "off"); //off, UNA, noUNA, etc. //off is the default
 	
 		if(serverConnection.containsDataStore("ontology-projection"))
 			serverConnection.deleteDataStore("ontology-projection"); 
 	
-        serverConnection.createDataStore("ontology-projection", "par-complex-nn", options); //par-complex-nn //par-simple-nn
+        serverConnection.createDataStore("ontology-projection", options); //par-complex-nn //par-simple-nn
 		
         // We connect to the data store.
 		dataStoreConnection = serverConnection.newDataStoreConnection("ontology-projection");
@@ -227,7 +227,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 	protected static long getTriplesCount(DataStoreConnection dataStoreConnection) throws JRDFoxException {
         HashMap<String, String> parameters = new HashMap<String, String>();
         //parameters.put("domain", queryDomain.toString());
-        try (Cursor cursor = dataStoreConnection.createCursor(Prefixes.s_emptyPrefixes, "SELECT ?X ?Y ?Z WHERE{ ?X ?Y ?Z }", parameters)) {
+        try (Cursor cursor = dataStoreConnection.createCursor("SELECT ?X ?Y ?Z WHERE{ ?X ?Y ?Z }", parameters)) {
             long result = 0;
             for (long multiplicity = cursor.open(); multiplicity != 0; multiplicity = cursor.advance())
                 result += multiplicity;
@@ -254,7 +254,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 			
 			// TODO: This is probably not correct, I dont know what toString does
 			//InputStream turtle_stream = getOntologyPipe(getClassifiedOntology());
-			dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, getClassifiedOntologyStream());
+			dataStoreConnection.importData(UpdateType.ADDITION, getClassifiedOntologyStream());
 			
 			
 			//2. Import projection data
@@ -263,7 +263,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 			
 			InputStream fis = new FileInputStream(new File(tmp_file_projection));
 			try (InputStream inputStream = new BufferedInputStream(fis)) {
-                dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, inputStream);
+                dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
             }
 			
 			//EDB are the explicitly stated facts.
@@ -296,7 +296,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 				getTextForTopBottomPropagationRules(rule_builder);
 			
 			//store.importText(rule_builder.toString());
-			dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, rule_builder.toString());
+			dataStoreConnection.importData(UpdateType.ADDITION, rule_builder.toString());
 			
 			Utility.println("Importing time RDFox: " + t.durationMilisecons()  + " (ms)");
 			
@@ -339,7 +339,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 			
 			
 				//store.importText(rule_builder.toString());
-				dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, rule_builder.toString());
+				dataStoreConnection.importData(UpdateType.ADDITION, rule_builder.toString());
 				
 				
 				//8. Materialization
@@ -374,7 +374,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 				getTextForTopBottomPropagationRulesInRange(rule_builder);
 			
 				//store.importText(rule_builder.toString());
-				dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, rule_builder.toString());
+				dataStoreConnection.importData(UpdateType.ADDITION, rule_builder.toString());
 				
 				
 				
@@ -397,7 +397,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 			Utility.println("Last step: importing ontology, rules and data");
 			//store.importOntology(getClassifiedOntology());
 			//dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, getClassifiedOntology().toString(), true, true, false, false);
-			dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, getClassifiedOntologyStream());
+			dataStoreConnection.importData(UpdateType.ADDITION, getClassifiedOntologyStream());
 						
 			rule_builder.setLength(0);
 			getTextForPrefixes(rule_builder);
@@ -408,7 +408,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 			//To infer Top as type
 			getTextForThingPropagationRules(rule_builder);
 			//store.importText(rule_builder.toString());
-			dataStoreConnection.importData(UpdateType.ADDITION, Prefixes.s_emptyPrefixes, rule_builder.toString());
+			dataStoreConnection.importData(UpdateType.ADDITION, rule_builder.toString());
 			
 			performMaterializationAdditionalData(getDataFilePath(), true, UpdateType.ADDITION);
 			
@@ -443,7 +443,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 		//store.importFiles(new File[] {new File(file_data)}, updateType);  //if updateType not indicated by default is addition 
 		InputStream fis = new FileInputStream(new File(file_data));
 		try (InputStream inputStream = new BufferedInputStream(fis)) {
-            dataStoreConnection.importData(updateType, Prefixes.s_emptyPrefixes, inputStream);
+            dataStoreConnection.importData(updateType, inputStream);
         }
 		
 		
@@ -483,7 +483,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 			File exportFacts = new File(file_out_materialization);
             try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(exportFacts))) {
             	Map<String, String> preferences = new HashMap<String, String>();
-                 dataStoreConnection.exportData(Prefixes.s_defaultPrefixes, outputStream , "application/n-triples", preferences);
+                 dataStoreConnection.exportData(outputStream , "application/n-triples", preferences);
             }
 		}
 		catch (Exception e) {
@@ -1672,7 +1672,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 		
 		//We use default IDB
 		//tupleIterator = store.compileQuery(query, prefixes);
-	   return dataStoreConnection.createCursor(Prefixes.s_defaultPrefixes, query, parameters); //s_emptyPrefixes
+	   return dataStoreConnection.createCursor(query, parameters); //s_emptyPrefixes
 	}
 	
 	
@@ -1719,7 +1719,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 			if (arity==1){
 				//System.out.println("Resorce results: " + cursor.getResource(0));
 				ResourceValue resource = cursor.getResourceValue(0);				
-				query_results.add(resource.m_lexicalForm);
+				query_results.add(resource.getLexicalForm());
 			}				
 			//}
 			
@@ -1774,7 +1774,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 				//Key
 				ResourceValue resource = cursor.getResourceValue(0);
 					
-				key = resource.m_lexicalForm;
+				key = resource.getLexicalForm();
 				
 				//System.out.println(key);
 					
@@ -1784,7 +1784,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 									
 				//value
 				resource = cursor.getResourceValue(1);
-				query_results.get(key).add(resource.m_lexicalForm);
+				query_results.get(key).add(resource.getLexicalForm());
 				
 				//System.out.println("\t" + resource.m_lexicalForm);
 				//System.out.println("\t" + resource.m_datatype.getIRI());
@@ -1848,7 +1848,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 				//Key
 				ResourceValue resource = cursor.getResourceValue(0);
 					
-				key = resource.m_lexicalForm;
+				key = resource.getLexicalForm();
 				
 				//System.out.println(key);
 					
@@ -1858,7 +1858,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 									
 				//value
 				resource = cursor.getResourceValue(1);
-				query_results.get(key).add(new GenericValue(resource.m_lexicalForm, resource.m_datatype.getIRI().toString()));
+				query_results.get(key).add(new GenericValue(resource.getLexicalForm(), resource.getDatatype().getIRI().toString()));
 				
 				//System.out.println("\t" + resource.m_lexicalForm);
 				//System.out.println("\t" + resource.m_datatype.getIRI());
@@ -1993,10 +1993,10 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 				//Utility.print(resource.toString(prefixes));
 				//Utility.print(resource.toString());
 				try{
-				Utility.printQueryInfo(resource.m_lexicalForm.split("#")[1]);
+				Utility.printQueryInfo(resource.getLexicalForm().split("#")[1]);
 				}
 				catch (Exception e){
-					Utility.printQueryInfo(resource.m_lexicalForm);
+					Utility.printQueryInfo(resource.getLexicalForm());
 				}
 			}
 			Utility.printQueryInfo(" * ");
@@ -2066,7 +2066,7 @@ public class RDFoxProjectionManager extends GraphProjectionManager<Cursor, Updat
 			if(serverConnection.containsDataStore("ontology-projection"))
 				serverConnection.deleteDataStore("ontology-projection"); 
 			
-			dataStoreConnection.clear();
+			//dataStoreConnection.clear(); //TODO requires paremeters
 		} catch (JRDFoxException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();

@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>ontology-services-toolkit</groupId>
-  <artifactId>ontology-services-toolkit</artifactId>
-  <version>1.0.0-OST</version>
-  <name>ontology-services-toolkit-ost</name>
-  <description>ontology services toolkit with RDFox OST version</description>
+  <groupId>kg-quality</groupId>
+  <artifactId>ontology-driven-kg-validation</artifactId>
+  <version>1.0.0</version>
+  <name>ontology-driven-kg-validation</name>
+  <description>Ontology-driven Knowledge Graph Valuidation</description>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -21,7 +21,7 @@
         
   </build>
   <organization>
-  	<name>University of Oslo</name>
+  	<name>City St George's, University of London</name>
   </organization>
   
   <dependencies>  
@@ -108,10 +108,19 @@
   <!-- Local dependency to be added using maven:install -->  
   
   <!-- JRDFox 2019 -->
-  <dependency>
+  <!-- dependency>
 	    <groupId>tech.oxfordsemantic</groupId>
 	    <artifactId>JRDFox</artifactId>
 	    <version>4.1.0</version>
+  </dependency -->
+  
+  <!-- RDFox 2026-->
+  <dependency>
+			<groupId>uk.ox.ost</groupId>
+			<artifactId>rdfox</artifactId>
+			<version>7.7.0</version>
+    		<scope>system</scope>
+    		<systemPath>C:/Users/Ernes/RDFox_OST/RDFox-win64-x86_64-7.7/lib/JRDFox.jar</systemPath>    		
   </dependency>
   
   <!-- JRDFox 2017 -->
