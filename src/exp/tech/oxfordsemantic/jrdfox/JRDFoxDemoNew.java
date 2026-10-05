@@ -83,7 +83,7 @@ public class JRDFoxDemoNew {
                 // We next import the RDF data into the store. At present, only Turtle/N-triples files are supported.
                 // At the moment, please convert RDF/XML files into Turtle format to load into JRDFox.
                 System.out.println("Importing RDF data...");
-                FileInputStream fis = new FileInputStream(userDirectory + "/files/lab10/rdfox/lubm1.ttl");
+                FileInputStream fis = new FileInputStream(userDirectory + "/data/rdfox-test/lubm1.ttl");
                 //try (InputStream inputStream = new BufferedInputStream(JRDFoxDemo.class.getResourceAsStream("/files/lab10/rdfox/lubm1.ttl"))) {
                 try (InputStream inputStream = new BufferedInputStream(fis)) {
                     dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
@@ -111,13 +111,13 @@ public class JRDFoxDemoNew {
 
                 System.out.println("Adding the ontology to the store...");
                 //try (InputStream inputStream = new BufferedInputStream(JRDFoxDemo.class.getResourceAsStream("/files/lab10/rdfox/univ-bench.owl"))) {
-                try (InputStream inputStream = new BufferedInputStream(new FileInputStream(userDirectory + "/files/lab10/rdfox/univ-bench.owl"))) {
+                try (InputStream inputStream = new BufferedInputStream(new FileInputStream(userDirectory + "/data/rdfox-test/univ-bench.owl"))) {
                     dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
                 }
 
                 System.out.println("Importing rules from a file...");
                 //try (InputStream inputStream = new BufferedInputStream(JRDFoxDemo.class.getResourceAsStream("/files/lab10/rdfox/additional-rules.txt"))) {
-                try (InputStream inputStream = new BufferedInputStream(new FileInputStream(userDirectory + "/files/lab10/rdfox/additional-rules.txt"))) {
+                try (InputStream inputStream = new BufferedInputStream(new FileInputStream(userDirectory + "/data/rdfox-test/additional-rules.txt"))) {
                     dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
                 }
                 System.out.println("Number of tuples after materialization: " + getTriplesCount(dataStoreConnection, "all"));
@@ -160,7 +160,7 @@ public class JRDFoxDemoNew {
                 // calling DataStoreConnection.importDataFiles() with additional argument UpdateType.ADDITION.
                 System.out.println("Importing triples for incremental reasoning...");
                 //try (InputStream inputStream = new BufferedInputStream(JRDFoxDemo.class.getResourceAsStream("/files/lab10/rdfox/lubm1-new.ttl"))) {
-                try (InputStream inputStream = new BufferedInputStream(new FileInputStream(userDirectory + "/files/lab10/rdfox/lubm1-new.ttl"))) {
+                try (InputStream inputStream = new BufferedInputStream(new FileInputStream(userDirectory + "/data/rdfox-test/lubm1-new.ttl"))) {
                     dataStoreConnection.importData(UpdateType.ADDITION, inputStream);
                 }
                 // Adding the rules/facts changes the number of triples. Note that the store is updated incrementally.
