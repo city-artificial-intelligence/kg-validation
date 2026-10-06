@@ -12,11 +12,11 @@ import java.util.TreeSet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import uio.ifi.ontology.toolkit.constraint.utils.Utility;
 import uio.ifi.ontology.toolkit.projection.controller.triplestore.RDFoxSessionManager;
 import uio.ifi.ontology.toolkit.projection.model.Facet;
 import uio.ifi.ontology.toolkit.projection.model.NeighbourLink;
 import uio.ifi.ontology.toolkit.projection.model.entities.Concept;
+import uk.city.kg.validation.constraint.utils.Utility;
 
 /**
  * 

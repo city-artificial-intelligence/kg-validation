@@ -12,9 +12,9 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
-import uio.ifi.ontology.toolkit.constraint.utils.Utility;
 import uio.ifi.ontology.toolkit.projection.controller.SessionManager;
 import uio.ifi.ontology.toolkit.projection.controller.reasoner.ReasonerManager.OWL2Reasoner;
+import uk.city.kg.validation.constraint.utils.Utility;
 //import tech.oxfordsemantic.jrdfox.JRDFStoreException;
 import tech.oxfordsemantic.jrdfox.exceptions.JRDFoxException;
 

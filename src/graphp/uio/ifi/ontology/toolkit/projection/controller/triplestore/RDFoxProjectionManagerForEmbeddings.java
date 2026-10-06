@@ -9,10 +9,9 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
-import uio.ifi.ontology.toolkit.constraint.utils.Utility;
-import uio.ifi.ontology.toolkit.constraint.utils.pagoda_hermit.Timer;
 import uio.ifi.ontology.toolkit.projection.controller.reasoner.ReasonerManager.OWL2Reasoner;
-
+import uk.city.kg.validation.constraint.utils.Utility;
+import uk.city.kg.validation.constraint.utils.pagoda_hermit.Timer;
 import tech.oxfordsemantic.jrdfox.Prefixes;
 //import tech.oxfordsemantic.jrdfox.client.QueryDomain;
 import tech.oxfordsemantic.jrdfox.client.UpdateType;

@@ -48,8 +48,6 @@ import org.semanticweb.owlapi.util.InferredSubDataPropertyAxiomGenerator;
 import org.semanticweb.owlapi.util.InferredSubObjectPropertyAxiomGenerator;
 
 import tech.oxfordsemantic.jrdfox.exceptions.JRDFoxException;
-import uio.ifi.ontology.toolkit.constraint.utils.Utility;
-import uio.ifi.ontology.toolkit.constraint.utils.pagoda_hermit.Timer;
 import uio.ifi.ontology.toolkit.projection.controller.reasoner.ReasonerManager;
 import uio.ifi.ontology.toolkit.projection.controller.reasoner.ReasonerManager.OWL2Reasoner;
 import uio.ifi.ontology.toolkit.projection.model.Facet;
@@ -64,6 +62,8 @@ import uio.ifi.ontology.toolkit.projection.model.triples.DataPropertyTriple;
 import uio.ifi.ontology.toolkit.projection.model.triples.ObjectPropertyTriple;
 import uio.ifi.ontology.toolkit.projection.model.triples.Triple;
 import uio.ifi.ontology.toolkit.projection.utils.URIUtils;
+import uk.city.kg.validation.constraint.utils.Utility;
+import uk.city.kg.validation.constraint.utils.pagoda_hermit.Timer;
 
 
 

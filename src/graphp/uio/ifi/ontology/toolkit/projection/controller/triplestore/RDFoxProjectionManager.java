@@ -38,8 +38,6 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semarglproject.vocab.XSD;
 
-import uio.ifi.ontology.toolkit.constraint.utils.Utility;
-import uio.ifi.ontology.toolkit.constraint.utils.pagoda_hermit.Timer;
 import uio.ifi.ontology.toolkit.projection.controller.GraphProjectionManager;
 import uio.ifi.ontology.toolkit.projection.controller.reasoner.ReasonerManager.OWL2Reasoner;
 import uio.ifi.ontology.toolkit.projection.model.BooleanFacet;
@@ -60,7 +58,8 @@ import uio.ifi.ontology.toolkit.projection.model.entities.ObjectProperty;
 import uio.ifi.ontology.toolkit.projection.model.triples.DataPropertyTriple;
 import uio.ifi.ontology.toolkit.projection.model.triples.ObjectPropertyTriple;
 import uio.ifi.ontology.toolkit.projection.utils.URIUtils;
-
+import uk.city.kg.validation.constraint.utils.Utility;
+import uk.city.kg.validation.constraint.utils.pagoda_hermit.Timer;
 import tech.oxfordsemantic.jrdfox.Prefixes;
 import tech.oxfordsemantic.jrdfox.client.Cursor;
 import tech.oxfordsemantic.jrdfox.client.DataStoreConnection;

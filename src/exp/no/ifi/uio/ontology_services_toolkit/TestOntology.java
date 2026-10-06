@@ -35,8 +35,8 @@ import org.semanticweb.owlapi.util.InferredSubClassAxiomGenerator;
 import org.semanticweb.owlapi.util.InferredSubDataPropertyAxiomGenerator;
 import org.semanticweb.owlapi.util.InferredSubObjectPropertyAxiomGenerator;
 
-import uio.ifi.ontology.toolkit.constraint.utils.Utility;
-import uio.ifi.ontology.toolkit.constraint.utils.pagoda_hermit.Timer;
+import uk.city.kg.validation.constraint.utils.Utility;
+import uk.city.kg.validation.constraint.utils.pagoda_hermit.Timer;
 
 /**
  * This class tests and modifies the Geological Ontology

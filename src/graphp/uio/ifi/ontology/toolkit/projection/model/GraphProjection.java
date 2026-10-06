@@ -27,8 +27,8 @@ import org.eclipse.rdf4j.model.vocabulary.SESAME;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.Rio;
 
-import uio.ifi.ontology.toolkit.constraint.utils.Utility;
 import uio.ifi.ontology.toolkit.projection.utils.URIUtils;
+import uk.city.kg.validation.constraint.utils.Utility;
 
 
 /**

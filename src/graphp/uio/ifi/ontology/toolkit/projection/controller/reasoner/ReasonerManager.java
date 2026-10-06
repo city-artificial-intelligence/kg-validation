@@ -9,7 +9,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
-import uio.ifi.ontology.toolkit.constraint.utils.Utility;
+import uk.city.kg.validation.constraint.utils.Utility;
 
 
 public class ReasonerManager {
